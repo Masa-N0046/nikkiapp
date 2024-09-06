@@ -281,28 +281,28 @@ function getMydiary($u_id)
     error_log('エラー発生：' . $e->getMessage());
   }
 }
-function diaryList()
-{
-  debug('日記情報を取得します。');
-  try {
-    // DBへ接続
-    $dbh = dbConnect();
-    // sql文実行
-    $sql = 'SELECT d.id, d.title, d.user_id, d.create_date, d.update_date, u.username FROM diary AS d INNER JOIN users AS u ON d.user_id = u.id AND d.delete_flg = 0';
-    $data = array();
-    // クエリ実行
-    $stmt = queryPost($dbh, $sql, $data);
+// function diaryList()
+// {
+//   debug('日記情報を取得します。');
+//   try {
+//     // DBへ接続
+//     $dbh = dbConnect();
+//     // sql文実行
+//     $sql = 'SELECT d.id, d.title, d.user_id, d.create_date, d.update_date, u.username FROM diary AS d INNER JOIN users AS u ON d.user_id = u.id AND d.delete_flg = 0';
+//     $data = array();
+//     // クエリ実行
+//     $stmt = queryPost($dbh, $sql, $data);
 
-    if ($stmt) {
-      // クエリ結果の全データを返却
-      return $stmt->fetchAll();
-    } else {
-      return false;
-    }
-  } catch (Exception $e) {
-    error_log('エラー発生：' . $e->getMessage());
-  }
-}
+//     if ($stmt) {
+//       // クエリ結果の全データを返却
+//       return $stmt->fetchAll();
+//     } else {
+//       return false;
+//     }
+//   } catch (Exception $e) {
+//     error_log('エラー発生：' . $e->getMessage());
+//   }
+// }
 
 // サニタイズ
 function sanitize($str)
@@ -409,4 +409,45 @@ function pagination($currentPageNum, $totalPageNum, $link = '', $pageColNum = 5)
   }
   echo '</ul>';
   echo '</div>';
+}
+function getDiaryList($currentMinNum = 1, $span = 5)
+{
+  debug('商品情報を取得します。');
+  //例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // 件数用のSQL文作成
+    $sql =
+      'SELECT d.id, d.title, d.user_id, d.create_date, d.update_date, u.username FROM diary AS d INNER JOIN users AS u ON d.user_id = u.id AND d.delete_flg = 0';
+    // $sql = 'SELECT * FROM diary';
+    $data = array();
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+    $rst['total'] = $stmt->rowCount(); //総レコード数
+    $rst['total_page'] = ceil($rst['total'] / $span); //総ページ数
+    if (!$stmt) {
+      return false;
+    }
+
+    // ページング用のSQL文作成
+    $sql =
+      'SELECT d.id, d.title, d.user_id, d.create_date, d.update_date, u.username FROM diary AS d INNER JOIN users AS u ON d.user_id = u.id AND d.delete_flg = 0';
+    // $sql = 'SELECT * FROM diary';
+    $sql .= ' LIMIT ' . $span . ' OFFSET ' . $currentMinNum;
+    $data = array();
+    debug('SQL：' . $sql);
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+
+    if ($stmt) {
+      // クエリ結果のデータを全レコードを格納
+      $rst['data'] = $stmt->fetchAll();
+      return $rst;
+    } else {
+      return false;
+    }
+  } catch (Exception $e) {
+    error_log('エラー発生:' . $e->getMessage());
+  }
 }
