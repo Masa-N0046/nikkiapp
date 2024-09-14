@@ -5,10 +5,9 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-      $(function() {
-
+      $(window).load(function() {
         // フッターを最下部に固定
-        var $ftr = $('#footer');
+        var $ftr = $('.footer');
         if (window.innerHeight > $ftr.offset().top + $ftr.outerHeight()) {
           $ftr.attr({
             'style': 'position:fixed; top:' + (window.innerHeight - $ftr.outerHeight()) + 'px;'
