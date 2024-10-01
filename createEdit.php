@@ -133,8 +133,9 @@ require('head.php');
         </div>
         <label class="<?php if (!empty($err_msg['content'])) echo 'err'; ?>">
           内容
-          <textarea cols="30" rows="10" style="height: 150px;" name="content"><?php echo getFormData('content'); ?></textarea>
+          <textarea id="js-count" cols="30" rows="10" style="height: 150px;" name="content"><?php echo getFormData('content'); ?></textarea>
         </label>
+        <p class="counter-text"><span id="js-count-view">0</span>/255文字</p>
         <div class="sec-area-msg">
           <?php if (!empty($err_msg['content'])) echo $err_msg['content'];
           ?>
