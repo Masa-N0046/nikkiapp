@@ -27,13 +27,46 @@ $savedUser = getUser($u_id);
 $savedDiary = (!empty($_SESSION['user_id'])) ? getDiary($_SESSION['user_id'], $d_id) : '';
 // ログインユーザーかつアクセスしたユーザーのdiaryか、未ログインユーザーで編集ボタンを表示するかの切り分け
 $appearButton = ($savedUser != $u_id && $savedUser != $savedDiary) ? getDiary($_SESSION['user_id'], $d_id) : '';
-
 // パラメータに不正な値が入っているかチェック
 if (empty($viewData)) {
   error_log('エラー発生:指定ページに不正な値が入りました');
   header("Location:index.php"); //トップページへ
 }
 debug('取得したDBデータ：' . print_r($viewData, true));
+
+// post送信されていた場合
+// 日記の削除
+if (!empty($_POST)) {
+  debug('POST送信があります。');
+  //例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // SQL文作成
+
+    $sql1 = 'UPDATE diary SET  delete_flg = 1 WHERE user_id = :u_id AND id = :d_id';
+
+    // データ流し込み
+    $data = array(':u_id' => $u_id, ':d_id' => $d_id);
+    // クエリ実行
+    $stmt1 = queryPost($dbh, $sql1, $data);
+
+    // クエリ実行成功の場合
+    if ($stmt1) {
+      //日記削除
+      $_SESSION['msg_success'] = SUC04;
+      debug('マイページへ遷移します。');
+      header("Location:mypage.php");
+    } else {
+      debug('クエリが失敗しました。');
+      $err_msg['common'] = MSG07;
+    }
+  } catch (Exception $e) {
+    error_log('エラー発生:' . $e->getMessage());
+    $err_msg['common'] = MSG07;
+  }
+}
+
 debug('画面表示処理終了<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
 
@@ -66,6 +99,9 @@ require('header.php');
           <button type="button" class="sec-btn_btn">
             <a href="createEdit.php<?php echo appendGetParam(array($viewData)); ?>">編集する</a>
           </button>
+          <form action="" method="post" class="sec-form_btn_del">
+            <input type="submit" class="sec-btn_btn_del" value="削除する" name="submit">
+          </form>
         <?php else : ?>
           編集できません
         <?php endif; ?>
