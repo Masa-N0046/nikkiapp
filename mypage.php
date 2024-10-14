@@ -15,11 +15,13 @@ require('auth.php');
 //================================
 $u_id = $_SESSION['user_id'];
 // DBから日記データを取得
-$diaryData = getMydiary($u_id);
+$dbDiaryData = getMydiary($u_id);
 
 // DBからきちんとデータがすべて取れているかのチェックは行わず、取れなければ何も表示しないこととする
 
-debug('取得した日記データ：' . print_r($diaryData, true));
+debug('取得した日記データ：' . print_r($dbDiaryData, true));
+
+
 
 debug('画面表示処理終了<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
@@ -43,12 +45,16 @@ require('head.php');
         <h1 class="sec-tit">マイ日記一覧</h1>
         <div class="sec-arti-wrap">
           <?php
-          if (!empty($diaryData)) {
-            foreach ($diaryData as $key => $val) {
+          if (!empty($dbDiaryData)) {
+            foreach ($dbDiaryData as $key => $val) {
           ?>
               <a href="article.php<?php echo (!empty(appendGetParam())) ? appendGetParam() . '&d_id=' . $val['id'] : '?d_id=' . $val['id']; ?>" class="panel">
                 <div class="sec-arti-body">
                   <p class="sec-arti-tit"><?php echo sanitize($val['title']); ?> </p>
+                  <div class="sec-arti-info">
+                    <p class="sec-arti-info-sub"><?php echo sanitize($val['create_date']); ?></p>
+                    <p class="sec-arti-info-sub"><?php echo sanitize($val['update_date']); ?></p>
+                  </div>
                 </div>
               </a>
             <?php
