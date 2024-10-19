@@ -8,8 +8,6 @@ debugLogStart();
 //================================
 // 画面処理
 //================================
-// 画面表示用データ取得
-//================================
 
 // GETパラメータを取得
 // -------------------------------
@@ -27,14 +25,10 @@ $listSpan = 5;
 $currentMinNum = (($currentPageNum - 1) * $listSpan); //1ページ目なら(1-1)*20 = 0 、 ２ページ目なら(2-1)*20 = 20
 // DBから商品データを取得
 $dbDiaryData = getDiaryList($currentMinNum);
-// debug('現在のページ：'.$currentPageNum);
-// debug('DBデータ：'.print_r($dbFormData,true));
-//debug('カテゴリデータ：'.print_r($dbCategoryData,true));
+debug('現在のページ：' . $currentPageNum);
+debug('DBデータ：' . print_r($dbDiaryData, true));
 
-// DBから日記データを取得
-// $diaryData = diaryList();
-// debug('取得した日記データ：' . print_r($diaryData, true));
-// debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
 
 <?php

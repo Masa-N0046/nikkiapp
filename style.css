@@ -82,9 +82,6 @@ footer {
   min-height: 100%;
   width: 760px;
 }
-.sec-main-float {
-  /* float: left; */
-}
 .sec-main {
   margin: 70px auto;
 }
@@ -111,8 +108,26 @@ footer {
   overflow: hidden;
   margin-top: 40px;
 }
-.sec-btn.sec-btn_btn {
-  float: right;
+.sec-btn_btn {
+  border-style: none;
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 10px 30px;
+  width: 15%;
+  background: #333;
+  color: white;
+}
+.sec-form_btn_del {
+  display: inline;
+}
+input[type='submit'].sec-btn_btn_del {
+  border-style: none;
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 10px 30px;
+  width: 15%;
+  background: #fd0000;
+  color: white;
 }
 /* form パクリ */
 label.err input {
