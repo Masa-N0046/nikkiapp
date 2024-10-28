@@ -59,6 +59,7 @@ define('SUC01', 'パスワードを変更しました');
 define('SUC02', 'プロフィールを変更しました');
 define('SUC03', 'メールを送信しました');
 define('SUC04', '登録しました');
+define('SUC05', '削除しました');
 
 // $err_msg配列を作る
 $err_msg = array();
@@ -426,5 +427,14 @@ function getDiaryList($currentMinNum = 1, $span = 5)
     }
   } catch (Exception $e) {
     error_log('エラー発生:' . $e->getMessage());
+  }
+}
+// sessionを1回だけ取得できる
+function getSessionFlash($key)
+{
+  if (!empty($_SESSION[$key])) {
+    $data = $_SESSION[$key];
+    $_SESSION[$key] = '';
+    return $data;
   }
 }

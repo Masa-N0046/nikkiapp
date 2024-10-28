@@ -54,7 +54,7 @@ if (!empty($_POST)) {
     // クエリ実行成功の場合
     if ($stmt1) {
       //日記削除
-      $_SESSION['msg_success'] = SUC04;
+      $_SESSION['msg_success'] = SUC05;
       debug('マイページへ遷移します。');
       header("Location:mypage.php");
     } else {
@@ -100,7 +100,7 @@ require('header.php');
             <a href="createEdit.php<?php echo appendGetParam(array($viewData)); ?>">編集する</a>
           </button>
           <form action="" method="post" class="sec-form_btn_del">
-            <input type="submit" class="sec-btn_btn_del" value="削除する" name="submit">
+            <input type="submit" class="sec-btn_btn_del" id="delete" value="削除する" name="submit">
           </form>
         <?php else : ?>
           編集できません
