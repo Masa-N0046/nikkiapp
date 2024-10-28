@@ -37,6 +37,10 @@ require('head.php');
   <?php
   require('header.php');
   ?>
+  <!-- flash-msg -->
+  <p id="js-show-msg" style="display:none;" class="msg-slide">
+    <?php echo getSessionFlash('msg_success'); ?>
+  </p>
   <!-- contents -->
   <!-- main -->
   <div class="sec-width">
