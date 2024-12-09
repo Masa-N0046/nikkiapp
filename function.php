@@ -51,7 +51,7 @@ define('MSG02', 'Emailの形式で入力してください');
 define('MSG03', 'パスワード（再入力）が合っていません');
 define('MSG04', '半角英数字のみご利用いただけます');
 define('MSG05', '6文字以上で入力してください');
-define('MSG06', '255文字以内で入力してください');
+define('MSG06', '500文字以内で入力してください');
 define('MSG07', 'エラーが発生しました。しばらく経ってからやり直してください。');
 define('MSG08', 'そのEmailは既に登録されています');
 define('MSG09', 'メールアドレスまたはパスワードが違います');
@@ -207,7 +207,7 @@ function getUser($u_id)
     error_log('エラー発生：' . $e->getMessage());
   }
   // クエリ結果のデータ返却
-  return $stmt->fetch(PDO::FETCH_ASSOC);
+  // return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 function getDiary($u_id, $d_id)
 {
@@ -402,9 +402,11 @@ function getDiaryList($currentMinNum = 1, $span = 5)
     $data = array();
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
+    // Call to a member function rowCount() on intの回避
     $rst['total'] = $stmt->rowCount(); //総レコード数
     $rst['total_page'] = ceil($rst['total'] / $span); //総ページ数
     if (!$stmt) {
+      // ここで投稿されたデータがなかった際のWarning: Trying to access array offset on false inが出るのか
       return false;
     }
 
@@ -423,6 +425,7 @@ function getDiaryList($currentMinNum = 1, $span = 5)
       $rst['data'] = $stmt->fetchAll();
       return $rst;
     } else {
+      // ここで投稿されたデータがなかった際のWarning: Trying to access array offset on false inが出るのか
       return false;
     }
   } catch (Exception $e) {

@@ -135,7 +135,7 @@ require('head.php');
           内容
           <textarea id="js-count" cols="30" rows="10" style="height: 150px;" name="content"><?php echo getFormData('content'); ?></textarea>
         </label>
-        <p class="counter-text"><span id="js-count-view">0</span>/255文字</p>
+        <p class="counter-text"><span id="js-count-view">0</span>/500文字</p>
         <div class="sec-area-msg">
           <?php if (!empty($err_msg['content'])) echo $err_msg['content'];
           ?>

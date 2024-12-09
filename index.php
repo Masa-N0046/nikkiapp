@@ -24,6 +24,7 @@ $listSpan = 5;
 // 現在の表示レコード先頭を算出
 $currentMinNum = (($currentPageNum - 1) * $listSpan); //1ページ目なら(1-1)*20 = 0 、 ２ページ目なら(2-1)*20 = 20
 // DBから商品データを取得
+
 $dbDiaryData = getDiaryList($currentMinNum);
 debug('現在のページ：' . $currentPageNum);
 debug('DBデータ：' . print_r($dbDiaryData, true));
@@ -46,26 +47,34 @@ require('head.php');
   <section class="sec-container">
     <div class="sec-main">
       <div class="sec-arti-wrap">
+
         <?php
-        foreach ($dbDiaryData['data'] as $key => $val) :
+        if ($dbDiaryData) :
+          foreach ($dbDiaryData['data'] as $key => $val) :
         ?>
-          <a href="article.php<?php echo (!empty(appendGetParam())) ? appendGetParam() . '&d_id=' . $val['id'] : '?d_id=' . $val['id']; ?>">
-            <div class="sec-arti-body">
-              <p class="sec-arti-tit"><?php echo sanitize($val['title']); ?> </p>
-              <div class="sec-arti-info">
-                <p class="sec-arti-info-sub"><?php echo sanitize($val['username']); ?></p>
-                <p class="sec-arti-info-sub"><?php echo sanitize($val['create_date']); ?></p>
-                <p class="sec-arti-info-sub"><?php echo sanitize($val['update_date']); ?></p>
+            <a href="article.php<?php echo (!empty(appendGetParam())) ? appendGetParam() . '&d_id=' . $val['id'] : '?d_id=' . $val['id']; ?>">
+              <div class="sec-arti-body">
+                <p class="sec-arti-tit"><?php echo sanitize($val['title']); ?> </p>
+                <div class="sec-arti-info">
+                  <p class="sec-arti-info-sub"><?php echo sanitize($val['username']); ?></p>
+                  <p class="sec-arti-info-sub"><?php echo sanitize($val['create_date']); ?></p>
+                  <p class="sec-arti-info-sub"><?php echo sanitize($val['update_date']); ?></p>
+                </div>
               </div>
-            </div>
-          </a>
-        <?php
-        endforeach;
-        ?>
+            </a>
+          <?php endforeach; ?>
+        <?php else:
+          echo まだ投稿はありません。 ?>
+        <?php endif; ?>
+
       </div>
     </div>
 
-    <?php pagination($currentPageNum, $dbDiaryData['total_page']); ?>
+    <?php
+    // どうすれば配列と判断されなくなるか？issetで解決した
+    pagination($currentPageNum, $dbDiaryData['total_page']);
+
+    ?>
 
   </section>
   <!-- footer -->

@@ -120,6 +120,12 @@ footer {
 .sec-form_btn_del {
   display: inline;
 }
+
+.back {
+  display: block;
+  padding-top: 15px;
+}
+
 input[type='submit'].sec-btn_btn_del {
   border-style: none;
   font-size: 14px;

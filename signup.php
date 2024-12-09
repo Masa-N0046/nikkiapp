@@ -52,7 +52,8 @@ if (!empty($_POST)) {
           // SQL文作成
           $sql = 'INSERT INTO users (email,password,login_time,create_date) VALUES(:email,:pass,:login_time,:create_date)';
           $data = array(
-            ':email' => $email, ':pass' => password_hash($pass, PASSWORD_DEFAULT),
+            ':email' => $email,
+            ':pass' => password_hash($pass, PASSWORD_DEFAULT),
             ':login_time' => date('Y-m-d H:i:s'),
             ':create_date' => date('Y-m-d H:i:s')
           );

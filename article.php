@@ -105,6 +105,16 @@ require('header.php');
         <?php else : ?>
           編集できません
         <?php endif; ?>
+
+        <?php if ($appearButton) : ?>
+          <a class="back" href="mypage.php">&lt;マイページに戻る</a>
+          <a class="back" href="index.php">&lt;一覧に戻る</a>
+        <?php else : ?>
+          <a class="back" href="index.php">&lt;一覧に戻る</a>
+        <?php endif; ?>
+
+
+
       </div>
     </div>
   </div>
