@@ -144,6 +144,7 @@ require('head.php');
           <input type="submit" class="sec-btn_btn" value="<?php echo (!$edit_flg) ? '投稿する' : '更新する'; ?>">
         </div>
       </form>
+      <a class="back" href="mypage.php">&lt;マイページに戻る</a>
     </div>
   </section>
   <!-- footer -->

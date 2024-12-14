@@ -92,6 +92,11 @@ footer {
 .sec-tit {
   margin-bottom: 40px;
 }
+.sec-detail {
+  /* width: 100%; */
+  /* inline-size: min-content; */
+  overflow-wrap: break-word;
+}
 
 /* form */
 .sec-form {

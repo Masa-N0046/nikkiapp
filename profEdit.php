@@ -136,6 +136,7 @@ require('head.php');
             <input type="submit" class="btn btn-mid" value="変更する">
           </div>
         </form>
+        <a class="back" href="mypage.php">&lt;マイページに戻る</a>
       </div>
     </section>
   </div>
